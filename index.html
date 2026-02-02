@@ -32,13 +32,13 @@
       color: var(--light);
       display: flex;
       flex-direction: column;
-      padding-top: 80px; /* Space reserved for fixed help box */
+      padding-top: 80px;           /* Space for fixed help box */
       padding-bottom: 20px;
       padding-left: 12px;
       padding-right: 12px;
     }
 
-    /* Help Box - FIXED at the very top center, stays visible when scrolling */
+    /* Help box – fixed at top center, always visible */
     .help-box {
       position: fixed;
       top: 12px;
@@ -65,7 +65,7 @@
       background: var(--yellow-dark);
     }
 
-    /* Hamburger Button */
+    /* Hamburger button */
     .menu-btn {
       position: fixed;
       top: 20px;
@@ -117,10 +117,7 @@
       cursor: pointer;
     }
 
-    .sidebar-item:hover {
-      background: rgba(255,215,0,0.1);
-      color: var(--yellow);
-    }
+    .sidebar-item:hover { background: rgba(255,215,0,0.1); color: var(--yellow); }
 
     .sidebar-item.active {
       background: var(--active-bg);
@@ -272,15 +269,15 @@
 </head>
 <body>
 
-<!-- Floating Need Help Box - FIXED at top center, yellow, stays visible when scrolling -->
+<!-- Help box – fixed at top center, always visible -->
 <div class="help-box" onclick="window.open('https://wa.me/923159180748', '_blank')">
   Need Help? Click Me
 </div>
 
-<!-- Hamburger Menu Button -->
+<!-- Hamburger button -->
 <div class="menu-btn" id="menuBtn">☰</div>
 
-<!-- Sidebar (hidden by default) -->
+<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
   <div class="sidebar-item active" onclick="window.location.href='#'">📄 Order Page</div>
   <div class="sidebar-item" onclick="window.open('https://chat.openai.com/', '_blank')">🤖 AI Chatbot</div>
@@ -288,7 +285,7 @@
   <div class="sidebar-item" onclick="window.location.href='about.html'">ℹ️ About Us</div>
 </div>
 
-<!-- Overlay for closing sidebar -->
+<!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
 <!-- Main content -->
@@ -428,7 +425,6 @@ function toggleSidebar() {
 menuBtn.addEventListener('click', toggleSidebar);
 overlay.addEventListener('click', toggleSidebar);
 
-// Close sidebar when clicking a link
 document.querySelectorAll('.sidebar-item').forEach(item => {
   item.addEventListener('click', () => {
     sidebar.classList.remove('open');
@@ -437,7 +433,7 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
   });
 });
 
-// Price & service logic (your previous working version)
+// Services data
 const servicesData = {
   instagram: [
     {value: "likes", text: "Instagram Likes", desc: "Real Instagram likes from active users. High engagement, natural-looking growth."},
@@ -612,17 +608,20 @@ qualityEl.addEventListener('change', updateQualityInfo);
 qtyEl.addEventListener('input', updatePrice);
 currEl.addEventListener('change', updatePrice);
 
-// WhatsApp submit
+// WhatsApp submit - fixed version (direct redirect)
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const service = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
-  const quality = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
+  const service  = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
+  const quality  = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
   const quantity = qtyEl.value.trim();
-  const link = linkEl.value.trim();
-  const price = totalEl.textContent + " " + totalSignEl.textContent;
+  const link     = document.getElementById('link').value.trim();
+  const price    = totalEl.textContent + " " + totalSignEl.textContent;
 
-  if (!quantity || !link) return;
+  if (!quantity || !link) {
+    alert("Please fill quantity and link/username");
+    return;
+  }
 
   const orderNumber = 103 + Math.floor(Math.random() * 500);
 
@@ -643,7 +642,10 @@ Price: ${price}
 ❤️ Thanks for ordering! (:`;
 
   const encoded = encodeURIComponent(message);
-  window.open(`https://wa.me/923159180748?text=${encoded}`, '_blank');
+  const waUrl = `https://wa.me/923159180748?text=${encoded}`;
+
+  // Direct redirect – opens WhatsApp app/chat reliably on mobile/desktop
+  window.location.href = waUrl;
 });
 
 // Initial calls
