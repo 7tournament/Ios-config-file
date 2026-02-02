@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>King Social Boost - Order Now</title>
   <style>
     :root {
@@ -13,6 +13,7 @@
       --gray: #1a1a1a;
       --light: #eeeeee;
       --whatsapp: #25D366;
+      --active-bg: rgba(255,215,0,0.25);
     }
 
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -22,7 +23,7 @@
       padding: 0;
       width: 100%;
       min-height: 100vh;
-      /* Removed overflow-x: hidden → horizontal scroll is now possible again */
+      overflow-x: hidden;
     }
 
     body {
@@ -31,25 +32,120 @@
       color: var(--light);
       display: flex;
       flex-direction: column;
-      padding: 20px 12px;
+      padding-top: 80px; /* Space reserved for fixed help box */
+      padding-bottom: 20px;
+      padding-left: 12px;
+      padding-right: 12px;
     }
 
-    .container {
-      max-width: 680px;
-      margin: 0 auto;
-      flex: 1;
-      width: 100%;
+    /* Help Box - FIXED at the very top center, stays visible when scrolling */
+    .help-box {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      background: var(--yellow);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      box-shadow: 0 6px 20px rgba(255,215,0,0.5);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+      white-space: nowrap;
+      border: 2px solid var(--yellow-dark);
     }
+
+    .help-box:hover {
+      transform: translateX(-50%) scale(1.08);
+      box-shadow: 0 10px 30px rgba(255,215,0,0.7);
+      background: var(--yellow-dark);
+    }
+
+    /* Hamburger Button */
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: var(--dark-gray);
+      color: var(--yellow);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+    }
+
+    .menu-btn:hover { background: var(--yellow-dark); color: var(--black); }
+    .menu-btn.open { background: var(--yellow); color: var(--black); }
+
+    /* Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      background: var(--dark-gray);
+      border-right: 1px solid var(--yellow-dark);
+      z-index: 1000;
+      transition: left 0.3s ease;
+      padding-top: 80px;
+      overflow-y: auto;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-item {
+      width: 100%;
+      padding: 16px 20px;
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: block;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover {
+      background: rgba(255,215,0,0.1);
+      color: var(--yellow);
+    }
+
+    .sidebar-item.active {
+      background: var(--active-bg);
+      color: var(--yellow);
+      font-weight: bold;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .overlay.open { opacity: 1; visibility: visible; }
+
+    /* Main content */
+    .container { max-width: 680px; margin: 0 auto; flex: 1; width: 100%; }
 
     header { text-align: center; padding: 40px 0 20px; }
-
-    h1 {
-      font-size: 3.2rem;
-      font-weight: 900;
-      color: var(--yellow);
-      text-shadow: 0 3px 10px rgba(255,215,0,0.4);
-    }
-
+    h1 { font-size: 3.2rem; font-weight: 900; color: var(--yellow); text-shadow: 0 3px 10px rgba(255,215,0,0.4); }
     .subtitle { color: #bbbbbb; font-size: 1.15rem; margin-top: 8px; }
 
     .stats-grid {
@@ -57,7 +153,6 @@
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 16px;
       margin: 30px 0 40px;
-      width: 100%;
     }
 
     .stat-card {
@@ -69,48 +164,14 @@
       box-shadow: 0 4px 15px rgba(255,215,0,0.08);
     }
 
-    .stat-number {
-      font-size: 2.4rem;
-      font-weight: 900;
-      color: var(--yellow);
-      margin-bottom: 6px;
-      line-height: 1;
-    }
-
-    .stat-text {
-      font-size: 0.95rem;
-      color: #dddddd;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-disclaimer {
-      grid-column: 1 / -1;
-      text-align: center;
-      font-size: 0.85rem;
-      color: #888;
-      margin-top: 8px;
-    }
+    .stat-number { font-size: 2.4rem; font-weight: 900; color: var(--yellow); margin-bottom: 6px; }
+    .stat-text { font-size: 0.95rem; color: #dddddd; text-transform: uppercase; letter-spacing: 0.5px; }
 
     .currency-selector { text-align: center; margin: 30px 0 40px; }
-
     .currency-selector label { font-size: 1.1rem; margin-right: 12px; color: var(--yellow); font-weight: 600; }
+    .currency-selector select { padding: 12px 18px; font-size: 1.05rem; background: var(--gray); color: var(--yellow); border: 2px solid var(--yellow-dark); border-radius: 10px; max-width: 100%; }
 
-    .currency-selector select {
-      padding: 12px 18px; font-size: 1.05rem;
-      background: var(--gray); color: var(--yellow);
-      border: 2px solid var(--yellow-dark); border-radius: 10px;
-      max-width: 100%;
-    }
-
-    .config-card, .order-card {
-      background: var(--dark-gray);
-      border: 2px solid var(--yellow-dark);
-      border-radius: 16px;
-      padding: 32px 24px;
-      margin-bottom: 40px;
-      width: 100%;
-    }
+    .config-card, .order-card { background: var(--dark-gray); border: 2px solid var(--yellow-dark); border-radius: 16px; padding: 32px 24px; margin-bottom: 40px; width: 100%; }
 
     h2 { color: var(--yellow); font-size: 1.8rem; margin-bottom: 24px; text-align: center; }
 
@@ -126,7 +187,6 @@
       border-radius: 10px;
       color: white;
       font-size: 1rem;
-      box-sizing: border-box;
     }
 
     select:focus, input:focus { border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(255,215,0,0.2); outline: none; }
@@ -206,11 +266,32 @@
       h1 { font-size: 2.6rem; }
       .total { font-size: 2.4rem; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
+      .help-box { font-size: 0.95rem; padding: 8px 18px; top: 10px; }
     }
   </style>
 </head>
 <body>
 
+<!-- Floating Need Help Box - FIXED at top center, yellow, stays visible when scrolling -->
+<div class="help-box" onclick="window.open('https://wa.me/923159180748', '_blank')">
+  Need Help? Click Me
+</div>
+
+<!-- Hamburger Menu Button -->
+<div class="menu-btn" id="menuBtn">☰</div>
+
+<!-- Sidebar (hidden by default) -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item active" onclick="window.location.href='#'">📄 Order Page</div>
+  <div class="sidebar-item" onclick="window.open('https://chat.openai.com/', '_blank')">🤖 AI Chatbot</div>
+  <div class="sidebar-item" onclick="window.location.href='faq.html'">❓ FAQ</div>
+  <div class="sidebar-item" onclick="window.location.href='about.html'">ℹ️ About Us</div>
+</div>
+
+<!-- Overlay for closing sidebar -->
+<div class="overlay" id="overlay"></div>
+
+<!-- Main content -->
 <div class="container">
 
   <header>
@@ -235,7 +316,6 @@
       <div class="stat-number">24/7</div>
       <div class="stat-text">LIVE SUPPORT</div>
     </div>
-    <div class="stat-disclaimer">*May vary on order size</div>
   </div>
 
   <div class="currency-selector">
@@ -334,7 +414,30 @@
 </footer>
 
 <script>
-// ── Services & Prices (unchanged) ──
+// Sidebar toggle
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+function toggleSidebar() {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+  menuBtn.classList.toggle('open');
+}
+
+menuBtn.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+
+// Close sidebar when clicking a link
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    menuBtn.classList.remove('open');
+  });
+});
+
+// Price & service logic (your previous working version)
 const servicesData = {
   instagram: [
     {value: "likes", text: "Instagram Likes", desc: "Real Instagram likes from active users. High engagement, natural-looking growth."},
@@ -344,13 +447,70 @@ const servicesData = {
     {value: "story-views", text: "Instagram Story Views", desc: "Real story views from real profiles – increases visibility fast."},
     {value: "saves", text: "Instagram Saves", desc: "Real saves on your posts – improves algorithm performance."}
   ],
-  // ... (rest of platforms same as before)
+  tiktok: [
+    {value: "likes", text: "TikTok Likes", desc: "Real TikTok likes from active users – helps videos go viral."},
+    {value: "followers", text: "TikTok Followers", desc: "Real TikTok followers with profile pics & activity – targeted or worldwide."},
+    {value: "views", text: "TikTok Video Views", desc: "Real high-retention TikTok views – pushes content to For You Page."},
+    {value: "comments", text: "TikTok Comments", desc: "Real-looking comments from genuine accounts to increase engagement."},
+    {value: "shares", text: "TikTok Shares", desc: "Real shares to expand reach and virality naturally."},
+    {value: "live-views", text: "TikTok Live Viewers", desc: "Real-time live stream viewers from real users."}
+  ],
+  youtube: [
+    {value: "views", text: "YouTube Views", desc: "Real high-retention YouTube views – monetization friendly."},
+    {value: "subscribers", text: "YouTube Subscribers", desc: "Real-looking YouTube subscribers with channel activity."},
+    {value: "likes", text: "YouTube Likes", desc: "Real likes from active viewers to improve ranking."},
+    {value: "comments", text: "YouTube Comments", desc: "Real positive comments from genuine users."},
+    {value: "watchtime", text: "YouTube Watch Time Hours", desc: "Real watch time hours from engaged viewers."}
+  ],
+  facebook: [
+    {value: "likes", text: "Facebook Page/Post Likes", desc: "Real likes on pages or posts from active profiles."},
+    {value: "followers", text: "Facebook Followers", desc: "Real followers for your Facebook page."},
+    {value: "views", text: "Facebook Video Views", desc: "Real views on Reels & videos from authentic users."},
+    {value: "comments", text: "Facebook Comments", desc: "Real engaging comments to boost interaction."},
+    {value: "shares", text: "Facebook Shares", desc: "Real shares to increase organic reach."}
+  ],
+  twitter: [
+    {value: "likes", text: "X / Twitter Likes", desc: "Real likes on your tweets from active accounts."},
+    {value: "followers", text: "X / Twitter Followers", desc: "Real X followers with profile activity."},
+    {value: "views", text: "X / Twitter Views / Impressions", desc: "Real impressions & profile visits."},
+    {value: "retweets", text: "X / Twitter Retweets", desc: "Real retweets to expand reach quickly."},
+    {value: "comments", text: "X / Twitter Replies", desc: "Real replies to increase conversation & engagement."}
+  ],
+  other: [
+    {value: "other", text: "Custom / Other Services", desc: "Real members/followers/views for Telegram, Spotify, Discord, Twitch, LinkedIn etc. – contact support for custom order."}
+  ]
 };
 
+// Prices
 const basePrices = {
   "instagram-likes": 0.85,
   "instagram-followers": 2.30,
-  // ... (rest same)
+  "instagram-views": 0.70,
+  "instagram-comments": 4.20,
+  "instagram-story-views": 1.10,
+  "instagram-saves": 2.50,
+  "tiktok-likes": 0.95,
+  "tiktok-followers": 3.00,
+  "tiktok-views": 0.65,
+  "tiktok-comments": 3.80,
+  "tiktok-shares": 5.50,
+  "tiktok-live-views": 4.00,
+  "youtube-views": 1.40,
+  "youtube-subscribers": 8.50,
+  "youtube-likes": 2.90,
+  "youtube-comments": 6.50,
+  "youtube-watchtime": 12.00,
+  "facebook-likes": 1.20,
+  "facebook-followers": 2.30,
+  "facebook-views": 0.90,
+  "facebook-comments": 4.50,
+  "facebook-shares": 3.20,
+  "twitter-likes": 1.10,
+  "twitter-followers": 2.80,
+  "twitter-views": 0.80,
+  "twitter-retweets": 3.50,
+  "twitter-comments": 5.00,
+  "other": 1.50
 };
 
 const qualityMultipliers = { standard: 0.6333, high: 1.00, premium: 2.00 };
@@ -365,57 +525,104 @@ const descEl      = document.getElementById('serviceDescription');
 const qualityInfo = document.getElementById('qualityInfo');
 const qtyEl       = document.getElementById('quantity');
 const currEl      = document.getElementById('currency');
-const linkEl      = document.getElementById('link');
 
 const price1000El    = document.getElementById('pricePer1000');
 const sign1000El     = document.getElementById('pricePer1000Sign');
 const totalEl        = document.getElementById('totalPrice');
 const totalSignEl    = document.getElementById('currSign');
 
-// Price update (unchanged)
+// Update services
+function updateServices() {
+  const platform = platformEl.value;
+  serviceEl.innerHTML = '<option value="" disabled selected>Select service...</option>';
+  serviceEl.disabled = !platform;
+
+  if (platform && servicesData[platform]) {
+    servicesData[platform].forEach(svc => {
+      const opt = document.createElement('option');
+      opt.value = platform + "-" + svc.value;
+      opt.textContent = svc.text;
+      serviceEl.appendChild(opt);
+    });
+  }
+
+  updateDescription();
+  updatePrice();
+}
+
+// Update description
+function updateDescription() {
+  const fullKey = serviceEl.value;
+  if (!fullKey) {
+    descEl.textContent = "Select a service...";
+    updatePrice();
+    return;
+  }
+
+  const [plat, svc] = fullKey.split('-');
+  const item = servicesData[plat]?.find(i => i.value === svc);
+  descEl.textContent = item ? item.desc : "No description available.";
+  updatePrice();
+}
+
+// Update quality info
+function updateQualityInfo() {
+  const q = qualityEl.value;
+  const map = {
+    standard: "Standard – Basic quality | 1-17 hours delivery | No refill | Possible drop",
+    high: "High – Good quality | 1-8 hours delivery | 7 day refill | Lowest drop",
+    premium: "Premium – Best quality | 1-2 hours delivery | Lifetime refill | No drop"
+  };
+  qualityInfo.textContent = map[q] || "";
+  updatePrice();
+}
+
+// Price calculation
 function updatePrice() {
   const serviceKey = serviceEl.value;
-  const qty        = Number(qtyEl.value) || 0;
-  const curr       = currEl.value;
-  const qual       = qualityEl.value;
+  const qty = Number(qtyEl.value) || 0;
+  const curr = currEl.value;
+  const qual = qualityEl.value;
 
   const sign = currencySigns[curr] || '$';
 
   let per1000Local = 0;
   if (serviceKey && basePrices[serviceKey]) {
     const baseUSD = basePrices[serviceKey];
-    const mult    = qualityMultipliers[qual] || 1;
-    const usd     = baseUSD * mult;
-    per1000Local  = usd * (exchangeRates[curr] || 1);
+    const mult = qualityMultipliers[qual] || 1;
+    const usd = baseUSD * mult;
+    per1000Local = usd * (exchangeRates[curr] || 1);
   }
 
   price1000El.textContent = per1000Local.toFixed(2);
-  sign1000El.textContent  = sign;
+  sign1000El.textContent = sign;
 
   let totalLocal = 0;
   if (qty >= 50 && per1000Local > 0) {
     totalLocal = (qty / 1000) * per1000Local;
   }
-  totalEl.textContent     = totalLocal.toFixed(2);
+  totalEl.textContent = totalLocal.toFixed(2);
   totalSignEl.textContent = sign;
 }
 
-// Other functions (updateServices, updateDescription, updateQualityInfo) unchanged
+// Event listeners
+platformEl.addEventListener('change', updateServices);
+serviceEl.addEventListener('change', updateDescription);
+qualityEl.addEventListener('change', updateQualityInfo);
+qtyEl.addEventListener('input', updatePrice);
+currEl.addEventListener('change', updatePrice);
 
-// WhatsApp handler with fallback alert
+// WhatsApp submit
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const service  = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
-  const quality  = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
+  const service = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
+  const quality = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
   const quantity = qtyEl.value.trim();
-  const link     = linkEl.value.trim();
-  const price    = totalEl.textContent + " " + totalSignEl.textContent;
+  const link = linkEl.value.trim();
+  const price = totalEl.textContent + " " + totalSignEl.textContent;
 
-  if (!quantity || !link) {
-    alert("Please fill quantity and link/username");
-    return;
-  }
+  if (!quantity || !link) return;
 
   const orderNumber = 103 + Math.floor(Math.random() * 500);
 
@@ -436,20 +643,7 @@ Price: ${price}
 ❤️ Thanks for ordering! (:`;
 
   const encoded = encodeURIComponent(message);
-  const waUrl = `https://wa.me/923159180748?text=${encoded}`;
-
-  // Attempt to open
-  const opened = window.open(waUrl, '_blank');
-
-  if (!opened) {
-    alert(
-      "Popup blocked by browser!\n\n" +
-      "Please allow pop-ups for this site:\n" +
-      "1. Click the lock icon in address bar\n" +
-      "2. Site settings → Pop-ups → Allow\n\n" +
-      "Or copy & open this link manually:\n" + waUrl
-    );
-  }
+  window.open(`https://wa.me/923159180748?text=${encoded}`, '_blank');
 });
 
 // Initial calls
