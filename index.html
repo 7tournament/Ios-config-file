@@ -32,13 +32,12 @@
       color: var(--light);
       display: flex;
       flex-direction: column;
-      padding-top: 80px;           /* Space for fixed help box */
+      padding-top: 80px;
       padding-bottom: 20px;
       padding-left: 12px;
       padding-right: 12px;
     }
 
-    /* Help box – fixed at top center, always visible */
     .help-box {
       position: fixed;
       top: 12px;
@@ -65,7 +64,6 @@
       background: var(--yellow-dark);
     }
 
-    /* Hamburger button */
     .menu-btn {
       position: fixed;
       top: 20px;
@@ -89,7 +87,6 @@
     .menu-btn:hover { background: var(--yellow-dark); color: var(--black); }
     .menu-btn.open { background: var(--yellow); color: var(--black); }
 
-    /* Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -125,7 +122,6 @@
       font-weight: bold;
     }
 
-    /* Overlay */
     .overlay {
       position: fixed;
       inset: 0;
@@ -138,7 +134,6 @@
 
     .overlay.open { opacity: 1; visibility: visible; }
 
-    /* Main content */
     .container { max-width: 680px; margin: 0 auto; flex: 1; width: 100%; }
 
     header { text-align: center; padding: 40px 0 20px; }
@@ -269,26 +264,21 @@
 </head>
 <body>
 
-<!-- Help box – fixed at top center, always visible -->
 <div class="help-box" onclick="window.open('https://wa.me/923159180748', '_blank')">
   Need Help? Click Me
 </div>
 
-<!-- Hamburger button -->
 <div class="menu-btn" id="menuBtn">☰</div>
 
-<!-- Sidebar -->
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-item active" onclick="window.location.href='#'">📄 Order Page</div>
-  <div class="sidebar-item" onclick="window.open('https://chat.openai.com/', '_blank')">🤖 AI Chatbot</div>
-  <div class="sidebar-item" onclick="window.location.href='faq.html'">❓ FAQ</div>
-  <div class="sidebar-item" onclick="window.location.href='about.html'">ℹ️ About Us</div>
+  <div class="sidebar-item active" onclick="window.location.href='/order/'">📄 Order Page</div>
+  <div class="sidebar-item" onclick="window.location.href='/chatbot/'">🤖 AI Chatbot</div>
+  <div class="sidebar-item" onclick="window.location.href='/faq/'">❓ FAQ</div>
+  <div class="sidebar-item" onclick="window.location.href='/about/'">ℹ️ About Us</div>
 </div>
 
-<!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
-<!-- Main content -->
 <div class="container">
 
   <header>
@@ -433,7 +423,7 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
   });
 });
 
-// Services data
+// Price & service logic (your previous working version)
 const servicesData = {
   instagram: [
     {value: "likes", text: "Instagram Likes", desc: "Real Instagram likes from active users. High engagement, natural-looking growth."},
@@ -477,7 +467,6 @@ const servicesData = {
   ]
 };
 
-// Prices
 const basePrices = {
   "instagram-likes": 0.85,
   "instagram-followers": 2.30,
@@ -608,7 +597,7 @@ qualityEl.addEventListener('change', updateQualityInfo);
 qtyEl.addEventListener('input', updatePrice);
 currEl.addEventListener('change', updatePrice);
 
-// WhatsApp submit - fixed version (direct redirect)
+// WhatsApp submit - fixed with direct redirect
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
@@ -644,7 +633,7 @@ Price: ${price}
   const encoded = encodeURIComponent(message);
   const waUrl = `https://wa.me/923159180748?text=${encoded}`;
 
-  // Direct redirect – opens WhatsApp app/chat reliably on mobile/desktop
+  // Direct redirect to WhatsApp (opens app on mobile, web on desktop)
   window.location.href = waUrl;
 });
 
