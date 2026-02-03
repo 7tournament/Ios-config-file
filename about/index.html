@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>King Social Boost - About Us</title>
+  <style>
+    :root {
+      --yellow: #ffd700;
+      --yellow-dark: #e6c200;
+      --black: #000000;
+      --dark-gray: #111111;
+      --gray: #1a1a1a;
+      --light: #eeeeee;
+      --whatsapp: #25D366;
+      --active-bg: rgba(255,215,0,0.25);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--light);
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+      padding-bottom: 20px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .help-box {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      background: var(--yellow);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      box-shadow: 0 6px 20px rgba(255,215,0,0.5);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+      white-space: nowrap;
+      border: 2px solid var(--yellow-dark);
+    }
+
+    .help-box:hover {
+      transform: translateX(-50%) scale(1.08);
+      box-shadow: 0 10px 30px rgba(255,215,0,0.7);
+      background: var(--yellow-dark);
+    }
+
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: var(--dark-gray);
+      color: var(--yellow);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+    }
+
+    .menu-btn:hover { background: var(--yellow-dark); color: var(--black); }
+    .menu-btn.open { background: var(--yellow); color: var(--black); }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      background: var(--dark-gray);
+      border-right: 1px solid var(--yellow-dark);
+      z-index: 1000;
+      transition: left 0.3s ease;
+      padding-top: 80px;
+      overflow-y: auto;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-item {
+      width: 100%;
+      padding: 16px 20px;
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: block;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover { background: rgba(255,215,0,0.1); color: var(--yellow); }
+
+    .sidebar-item.active {
+      background: var(--active-bg);
+      color: var(--yellow);
+      font-weight: bold;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .overlay.open { opacity: 1; visibility: visible; }
+
+    .container { max-width: 680px; margin: 0 auto; flex: 1; width: 100%; }
+
+    header { text-align: center; padding: 40px 0 20px; }
+    h1 { font-size: 3.2rem; font-weight: 900; color: var(--yellow); text-shadow: 0 3px 10px rgba(255,215,0,0.4); }
+    .subtitle { color: #bbbbbb; font-size: 1.15rem; margin-top: 8px; }
+
+    .about-card {
+      background: var(--dark-gray);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .about-section {
+      margin-bottom: 32px;
+    }
+
+    .about-section h3 {
+      color: var(--yellow);
+      font-size: 1.6rem;
+      margin-bottom: 12px;
+      border-bottom: 2px solid var(--yellow-dark);
+      padding-bottom: 8px;
+    }
+
+    .about-section p, .about-section ul {
+      line-height: 1.7;
+      font-size: 1.05rem;
+      margin-bottom: 16px;
+    }
+
+    .about-section ul {
+      padding-left: 24px;
+      list-style-type: disc;
+    }
+
+    .about-section ul li {
+      margin-bottom: 12px;
+    }
+
+    .highlight {
+      color: var(--yellow);
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0 20px;
+      color: #777;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+      margin-top: auto;
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 2.6rem; }
+      .about-section h3 { font-size: 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="help-box" onclick="window.open('https://wa.me/923159180748', '_blank')">
+  Need Help? Click Me
+</div>
+
+<div class="menu-btn" id="menuBtn">☰</div>
+
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item" onclick="window.location.href='order.html'">📄 Order Page</div>
+  <div class="sidebar-item" onclick="window.location.href='chatbot.html'">🤖 AI Chatbot</div>
+  <div class="sidebar-item" onclick="window.location.href='faq.html'">❓ FAQ</div>
+  <div class="sidebar-item active" onclick="window.location.href='#'">ℹ️ About Us</div>
+</div>
+
+<div class="overlay" id="overlay"></div>
+
+<div class="container">
+
+  <header>
+    <h1>About King Social Boost</h1>
+    <div class="subtitle">Your Trusted Partner for Authentic Social Media Growth</div>
+  </header>
+
+  <div class="about-card">
+
+    <div class="about-section">
+      <h3>Who We Are</h3>
+      <p>King Social Boost is a premium social media growth service dedicated to helping creators, influencers, businesses, and individuals build real, lasting engagement across major platforms. We specialize in delivering high-quality, organic-looking results — never using bots, fake accounts, or risky shortcuts that could harm your profile.</p>
+      <p>Our focus is on <span class="highlight">authenticity, safety, and speed</span>. Every order is handled with care, transparency, and a commitment to your long-term success.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>Our Mission & Vision</h3>
+      <p><strong>Mission:</strong> To empower people and brands to grow their online presence naturally and confidently — without fear of bans, drops, or fake metrics.</p>
+      <p><strong>Vision:</strong> To become the most trusted name in social media boosting worldwide — known for reliability, real results, and exceptional customer support.</p>
+      <p>We believe everyone deserves a fair chance to shine online. That’s why we only provide services that align with platform guidelines and protect your account.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>What Makes Us Different</h3>
+      <ul>
+        <li><strong>100% Real Engagement</strong> — All likes, followers, views, and comments come from genuine, active users with full profiles and activity.</li>
+        <li><strong>Three Quality Tiers</strong> — Standard (affordable & fast), High (balanced & reliable), Premium (top-tier with lifetime refill & zero drop risk).</li>
+        <li><strong>Strong Guarantees</strong> — Lifetime refill on Premium, 7-day on High — your growth stays protected.</li>
+        <li><strong>Lightning-Fast Start</strong> — Most orders begin processing in 1–2 hours (Premium often instant).</li>
+        <li><strong>24/7 Real Human Support</strong> — Talk to actual people via WhatsApp — fast, friendly, and always available.</li>
+        <li><strong>Crystal-Clear Pricing</strong> — No hidden fees — see exact price per 1000 before you order.</li>
+        <li><strong>Customer-First Approach</strong> — Refunds issued quickly if we can’t deliver, and we fix issues instantly.</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h3>Our Core Values</h3>
+      <ul>
+        <li><strong>Honesty</strong> — We never overpromise or use misleading tactics. What we say is what you get.</li>
+        <li><strong>Quality Over Quantity</strong> — We prioritize real, high-retention engagement over cheap, fake numbers.</li>
+        <li><strong>Safety First</strong> — Gradual delivery + real accounts = zero risk to your profile.</li>
+        <li><strong>Transparency</strong> — Full details, no surprises, clear communication at every step.</li>
+        <li><strong>Customer Success</strong> — Your growth is our success — we celebrate every milestone with you.</li>
+      </ul>
+    </div>
+
+    <div class="about-section">
+      <h3>Our Services Overview</h3>
+      <p>We provide premium growth services for:</p>
+      <ul>
+        <li><strong>Instagram</strong> — Likes, Followers, Reel/Video Views, Comments, Story Views, Saves</li>
+        <li><strong>TikTok</strong> — Likes, Followers, Video Views, Comments, Shares, Live Viewers</li>
+        <li><strong>YouTube</strong> — Views, Subscribers, Likes, Comments, Watch Time Hours</li>
+        <li><strong>Facebook</strong> — Page/Post Likes, Followers, Video Views, Comments, Shares</li>
+        <li><strong>X / Twitter</strong> — Likes, Followers, Views/Impressions, Retweets, Replies</li>
+        <li><strong>Custom Platforms</strong> — Telegram members, Spotify streams, Discord boosts, Twitch viewers, LinkedIn connections — ask us for anything!</li>
+      </ul>
+      <p>Every service is fully customizable — choose your quality level and quantity to match your goals.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>Why Thousands Trust Us</h3>
+      <ul>
+        <li>99.8% satisfaction rate from real customers</li>
+        <li>Thousands of successful orders delivered</li>
+        <li>Fastest processing and delivery times</li>
+        <li>Proven safety record — no bans when using our Premium/High plans</li>
+        <li>Round-the-clock support via WhatsApp</li>
+        <li>Guarantees that actually mean something (refills, refunds when needed)</li>
+      </ul>
+      <p>We don’t just sell numbers — we build real growth that lasts.</p>
+    </div>
+
+    <div class="about-section">
+      <h3>Our Promise to You</h3>
+      <p>When you choose King Social Boost, you get more than just engagement — you get a partner committed to your success. We stand behind every order with:</p>
+      <ul>
+        <li>Fast, reliable delivery</li>
+        <li>Real results you can see and feel proud of</li>
+        <li>Account safety as our #1 priority</li>
+        <li>Support that feels personal, not robotic</li>
+      </ul>
+      <p><strong>Ready to level up?</strong> Head to the Order Page now or message us anytime — we’re here to make your socials unstoppable.</p>
+    </div>
+
+  </div>
+
+</div>
+
+<footer>
+  © King Social Boost - All Rights Reserved
+</footer>
+
+<script>
+// Sidebar toggle
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.getElementById('sidebar');
+const overlay = document.getElementById('overlay');
+
+function toggleSidebar() {
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+  menuBtn.classList.toggle('open');
+}
+
+menuBtn.addEventListener('click', toggleSidebar);
+overlay.addEventListener('click', toggleSidebar);
+
+document.querySelectorAll('.sidebar-item').forEach(item => {
+  item.addEventListener('click', () => {
+    sidebar.classList.remove('open');
+    overlay.classList.remove('open');
+    menuBtn.classList.remove('open');
+  });
+});
+</script>
+
+</body>
+</html>
