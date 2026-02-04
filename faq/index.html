@@ -5,8 +5,192 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>King Social Boost - FAQ</title>
   <style>
-    /* Same CSS as above - copy the full <style> block from the order page above to keep design identical */
-    /* ... paste the entire :root, *, body, .help-box, .menu-btn, .sidebar, etc. here ... */
+    :root {
+      --yellow: #ffd700;
+      --yellow-dark: #e6c200;
+      --black: #000000;
+      --dark-gray: #111111;
+      --gray: #1a1a1a;
+      --light: #eeeeee;
+      --whatsapp: #25D366;
+      --active-bg: rgba(255,215,0,0.25);
+    }
+
+    * { margin:0; padding:0; box-sizing:border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: var(--black);
+      color: var(--light);
+      display: flex;
+      flex-direction: column;
+      padding-top: 80px;
+      padding-bottom: 20px;
+      padding-left: 12px;
+      padding-right: 12px;
+    }
+
+    .help-box {
+      position: fixed;
+      top: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2000;
+      background: var(--yellow);
+      color: var(--black);
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
+      box-shadow: 0 6px 20px rgba(255,215,0,0.5);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.3s;
+      white-space: nowrap;
+      border: 2px solid var(--yellow-dark);
+    }
+
+    .help-box:hover {
+      transform: translateX(-50%) scale(1.08);
+      box-shadow: 0 10px 30px rgba(255,215,0,0.7);
+      background: var(--yellow-dark);
+    }
+
+    .menu-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1100;
+      background: var(--dark-gray);
+      color: var(--yellow);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      font-size: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+      transition: all 0.3s;
+    }
+
+    .menu-btn:hover { background: var(--yellow-dark); color: var(--black); }
+    .menu-btn.open { background: var(--yellow); color: var(--black); }
+
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: -250px;
+      height: 100%;
+      width: 250px;
+      background: var(--dark-gray);
+      border-right: 1px solid var(--yellow-dark);
+      z-index: 1000;
+      transition: left 0.3s ease;
+      padding-top: 80px;
+      overflow-y: auto;
+    }
+
+    .sidebar.open { left: 0; }
+
+    .sidebar-item {
+      width: 100%;
+      padding: 16px 20px;
+      color: var(--light);
+      text-decoration: none;
+      font-size: 1.1rem;
+      display: block;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .sidebar-item:hover { background: rgba(255,215,0,0.1); color: var(--yellow); }
+
+    .sidebar-item.active {
+      background: var(--active-bg);
+      color: var(--yellow);
+      font-weight: bold;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 900;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+    }
+
+    .overlay.open { opacity: 1; visibility: visible; }
+
+    .container { max-width: 680px; margin: 0 auto; flex: 1; width: 100%; }
+
+    header { text-align: center; padding: 40px 0 20px; }
+    h1 { font-size: 3.2rem; font-weight: 900; color: var(--yellow); text-shadow: 0 3px 10px rgba(255,215,0,0.4); }
+    .subtitle { color: #bbbbbb; font-size: 1.15rem; margin-top: 8px; }
+
+    .faq-card {
+      background: var(--dark-gray);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 16px;
+      padding: 32px 24px;
+      margin-bottom: 40px;
+      width: 100%;
+    }
+
+    .faq-item {
+      margin-bottom: 24px;
+      border-bottom: 1px solid #444444;
+      padding-bottom: 16px;
+    }
+
+    .faq-question {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: var(--yellow);
+      margin-bottom: 8px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .faq-answer {
+      color: var(--light);
+      line-height: 1.6;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out, padding 0.4s ease-out;
+      padding: 0;
+    }
+
+    .faq-answer.show {
+      max-height: 2000px;
+      padding: 12px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 0 20px;
+      color: #777;
+      font-size: 0.9rem;
+      border-top: 1px solid #222;
+      margin-top: auto;
+    }
+
+    @media (max-width: 520px) {
+      h1 { font-size: 2.6rem; }
+      .faq-question { font-size: 1.1rem; }
+    }
   </style>
 </head>
 <body>
@@ -18,7 +202,7 @@
 <div class="menu-btn" id="menuBtn">☰</div>
 
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-item" onclick="window.location.href='/order/'">📄 Order Page</div>
+  <div class="sidebar-item" onclick="window.location.href='/'">📄 Order Page</div>
   <div class="sidebar-item" onclick="window.location.href='/chatbot/'">🤖 AI Chatbot</div>
   <div class="sidebar-item active" onclick="window.location.href='/faq/'">❓ FAQ</div>
   <div class="sidebar-item" onclick="window.location.href='/about/'">ℹ️ About Us</div>
@@ -30,11 +214,11 @@
 
   <header>
     <h1>Frequently Asked Questions</h1>
-    <div class="subtitle">Quick answers to the most common questions</div>
+    <div class="subtitle">Quick answers to the most common questions, CLICK THE QUESTION TO SEE THE ANSWER!</div>
   </header>
 
   <div class="faq-card">
-    <!-- Your FAQ items here - copy from previous FAQ code -->
+
     <div class="faq-item">
       <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How fast do you deliver orders?</div>
       <div class="faq-answer">
@@ -42,10 +226,107 @@
         • Standard quality: 1–17 hours  
         • High quality: 1–8 hours  
         • Premium quality: 1–2 hours  
-        Larger orders may take slightly longer, but we always prioritize speed.
+        Larger orders may take slightly longer, but we always prioritize speed and reliability.
       </div>
     </div>
-    <!-- Add all other FAQ items the same way -->
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Is refill guaranteed if followers/likes drop?</div>
+      <div class="faq-answer">
+        Yes — refill depends on the quality you choose:  
+        • Standard: No refill  
+        • High: 7-day refill guarantee  
+        • Premium: Lifetime refill guarantee  
+        If drops occur within the refill period, just message us on WhatsApp with your order number — we'll replace them free of charge.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Are the likes, followers, views real?</div>
+      <div class="faq-answer">
+        Yes — 100% real, active accounts only.  
+        • Followers have profile pictures, posts, stories, and normal activity  
+        • Likes/views come from genuine users  
+        • No bots or fake profiles — this keeps your account safe and avoids sudden drops or shadowbans.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How do I place an order?</div>
+      <div class="faq-answer">
+        It's very simple:  
+        1. Go to the Order Page (/order/)  
+        2. Select your platform (Instagram, TikTok, YouTube, etc.)  
+        3. Choose the service (likes, followers, views...)  
+        4. Pick quality level (Standard, High, Premium)  
+        5. Paste your profile/post/video link or username  
+        6. Enter quantity  
+        7. See the price → click "Place Order via WhatsApp"  
+        8. Send the pre-filled message to our WhatsApp number  
+        We start working on it right away.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">What if I enter the wrong link or username?</div>
+      <div class="faq-answer">
+        No problem at all. Just message us on WhatsApp (+92 315 9180748) with the correct link and your order number.  
+        We'll update it immediately — usually within minutes — and continue delivery.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Do you offer refunds?</div>
+      <div class="faq-answer">
+        Yes, refunds are possible in these cases:  
+        • We couldn't deliver any part of the order  
+        • Delivery is significantly delayed beyond our estimated time  
+        • Any other valid issue  
+        Contact us on WhatsApp within 24–48 hours of placing the order — we'll review and process a refund quickly if applicable.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Is it safe for my account? Will I get banned?</div>
+      <div class="faq-answer">
+        Yes — completely safe when using our services.  
+        • We use gradual, natural delivery speed  
+        • Real accounts only (no bots)  
+        • Premium/High plans are especially safe (very low drop risk)  
+        Thousands of customers have used us without any bans or issues.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Can I order multiple services at the same time?</div>
+      <div class="faq-answer">
+        Yes! You can place as many orders as you want — one after another.  
+        If you want to combine everything (e.g., likes + followers + views), just message us on WhatsApp with all details — we'll help you get the best package.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How do I contact support if I have a problem?</div>
+      <div class="faq-answer">
+        Just click the yellow "Need Help? Click Me" box at the top of any page — it opens WhatsApp chat directly.  
+        Or message us manually: +92 315 9180748  
+        We're online 24/7 and usually reply within minutes.
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">What payment methods do you accept?</div>
+      <div class="faq-answer">
+        We accept payments via:  
+        • EasyPaisa  
+        • JazzCash  
+        • Bank transfer  
+        • USDT / crypto (if requested)  
+        • Cash on delivery in some areas (contact us to confirm)  
+        All details are sent in the WhatsApp message after you place the order.
+      </div>
+    </div>
+
   </div>
 
 </div>
@@ -55,7 +336,7 @@
 </footer>
 
 <script>
-// Sidebar toggle (same as order page)
+// Sidebar toggle
 const menuBtn = document.getElementById('menuBtn');
 const sidebar = document.getElementById('sidebar');
 const overlay = document.getElementById('overlay');
