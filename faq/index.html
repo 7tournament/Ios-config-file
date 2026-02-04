@@ -162,6 +162,22 @@
       margin-bottom: 8px;
       cursor: pointer;
       user-select: none;
+      position: relative;
+      padding-right: 28px;
+    }
+
+    .faq-question::after {
+      content: '▼';
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.9rem;
+      transition: transform 0.3s ease;
+    }
+
+    .faq-question.open::after {
+      transform: translateY(-50%) rotate(180deg);
     }
 
     .faq-answer {
@@ -214,13 +230,13 @@
 
   <header>
     <h1>Frequently Asked Questions</h1>
-    <div class="subtitle">Quick answers to the most common questions, CLICK THE QUESTION TO SEE THE ANSWER!</div>
+    <div class="subtitle">Quick answers to the most common questions – click the question to see the answer!</div>
   </header>
 
   <div class="faq-card">
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How fast do you deliver orders?</div>
+      <div class="faq-question">How fast do you deliver orders?</div>
       <div class="faq-answer">
         Most orders start processing within 1–2 hours (often instantly).  
         • Standard quality: 1–17 hours  
@@ -231,7 +247,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Is refill guaranteed if followers/likes drop?</div>
+      <div class="faq-question">Is refill guaranteed if followers/likes drop?</div>
       <div class="faq-answer">
         Yes — refill depends on the quality you choose:  
         • Standard: No refill  
@@ -242,7 +258,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Are the likes, followers, views real?</div>
+      <div class="faq-question">Are the likes, followers, views real?</div>
       <div class="faq-answer">
         Yes — 100% real, active accounts only.  
         • Followers have profile pictures, posts, stories, and normal activity  
@@ -252,10 +268,10 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How do I place an order?</div>
+      <div class="faq-question">How do I place an order?</div>
       <div class="faq-answer">
         It's very simple:  
-        1. Go to the Order Page (/order/)  
+        1. Go to the Order Page  
         2. Select your platform (Instagram, TikTok, YouTube, etc.)  
         3. Choose the service (likes, followers, views...)  
         4. Pick quality level (Standard, High, Premium)  
@@ -268,7 +284,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">What if I enter the wrong link or username?</div>
+      <div class="faq-question">What if I enter the wrong link or username?</div>
       <div class="faq-answer">
         No problem at all. Just message us on WhatsApp (+92 315 9180748) with the correct link and your order number.  
         We'll update it immediately — usually within minutes — and continue delivery.
@@ -276,7 +292,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Do you offer refunds?</div>
+      <div class="faq-question">Do you offer refunds?</div>
       <div class="faq-answer">
         Yes, refunds are possible in these cases:  
         • We couldn't deliver any part of the order  
@@ -287,7 +303,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Is it safe for my account? Will I get banned?</div>
+      <div class="faq-question">Is it safe for my account? Will I get banned?</div>
       <div class="faq-answer">
         Yes — completely safe when using our services.  
         • We use gradual, natural delivery speed  
@@ -298,7 +314,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">Can I order multiple services at the same time?</div>
+      <div class="faq-question">Can I order multiple services at the same time?</div>
       <div class="faq-answer">
         Yes! You can place as many orders as you want — one after another.  
         If you want to combine everything (e.g., likes + followers + views), just message us on WhatsApp with all details — we'll help you get the best package.
@@ -306,7 +322,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">How do I contact support if I have a problem?</div>
+      <div class="faq-question">How do I contact support if I have a problem?</div>
       <div class="faq-answer">
         Just click the yellow "Need Help? Click Me" box at the top of any page — it opens WhatsApp chat directly.  
         Or message us manually: +92 315 9180748  
@@ -315,7 +331,7 @@
     </div>
 
     <div class="faq-item">
-      <div class="faq-question" onclick="this.nextElementSibling.classList.toggle('show')">What payment methods do you accept?</div>
+      <div class="faq-question">What payment methods do you accept?</div>
       <div class="faq-answer">
         We accept payments via:  
         • EasyPaisa  
@@ -358,11 +374,26 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
   });
 });
 
-// FAQ accordion
-document.querySelectorAll('.faq-question').forEach(question => {
-  question.addEventListener('click', function() {
-    this.nextElementSibling.classList.toggle('show');
-  });
+// FAQ accordion - reliable version
+document.querySelectorAll('.faq-item').forEach(item => {
+  const question = item.querySelector('.faq-question');
+  const answer = item.querySelector('.faq-answer');
+  
+  if (question && answer) {
+    question.addEventListener('click', () => {
+      // Toggle current answer
+      answer.classList.toggle('show');
+      question.classList.toggle('open');
+      
+      // Optional: close all others (accordion behavior)
+      // document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+      //   if (otherAnswer !== answer) {
+      //     otherAnswer.classList.remove('show');
+      //     otherAnswer.previousElementSibling.classList.remove('open');
+      //   }
+      // });
+    });
+  }
 });
 </script>
 
