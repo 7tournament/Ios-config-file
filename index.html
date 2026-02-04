@@ -241,7 +241,35 @@
 
     .whatsapp-icon { width: 28px; height: 28px; }
 
-    .note { margin-top: 30px; text-align: center; font-size: 0.95rem; color: #999; }
+    .quantity-limits-note {
+      background: rgba(255,215,0,0.12);
+      border: 1px solid rgba(255,215,0,0.35);
+      border-radius: 10px;
+      padding: 12px 16px;
+      margin-top: 10px;
+      font-size: 0.95rem;
+      color: var(--light);
+      line-height: 1.5;
+    }
+
+    .quantity-limits-note strong {
+      color: var(--yellow);
+    }
+
+    .discount-note { font-size: 0.9rem; color: #aaa; margin-top: 6px; text-align: center; }
+
+    .special-offer-note {
+      background: rgba(255,215,0,0.15);
+      border: 1px solid var(--yellow-dark);
+      border-radius: 10px;
+      padding: 12px;
+      margin: 20px 0;
+      text-align: center;
+      font-size: 1rem;
+      color: var(--light);
+    }
+
+    .note { margin-top: 20px; text-align: center; font-size: 0.95rem; color: #999; }
 
     .hint { font-size: 0.9rem; color: #aaa; margin-top: 6px; text-align: center; }
 
@@ -271,7 +299,7 @@
 <div class="menu-btn" id="menuBtn">☰</div>
 
 <div class="sidebar" id="sidebar">
-  <div class="sidebar-item active" onclick="window.location.href='/order/'">📄 Order Page</div>
+  <div class="sidebar-item active" onclick="window.location.href='/'">📄 Order Page</div>
   <div class="sidebar-item" onclick="window.location.href='/chatbot/'">🤖 AI Chatbot</div>
   <div class="sidebar-item" onclick="window.location.href='/faq/'">❓ FAQ</div>
   <div class="sidebar-item" onclick="window.location.href='/about/'">ℹ️ About Us</div>
@@ -366,7 +394,18 @@
 
       <div class="form-group">
         <label>Quantity</label>
-        <input type="number" id="quantity" min="50" placeholder="e.g. 1000" required>
+        <input type="number" id="quantity" placeholder="e.g. 1000" required>
+
+        <!-- DYNAMIC NOTE: Only shows min/max for the chosen service -->
+        <div class="quantity-limits-note" id="quantityNote">
+          Select a service to see quantity limits...
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Discount Code (optional)</label>
+        <input type="text" id="discountCode" placeholder="Enter code if you have one">
+        <div class="discount-note">Ignore this if you don’t have discount code</div>
       </div>
 
       <div class="price-box">
@@ -387,6 +426,10 @@
         Place Order via WhatsApp
       </button>
 
+      <div class="special-offer-note">
+        Spending more than 30$ on orders, we will give 13% discount code
+      </div>
+
     </form>
 
     <div class="note">
@@ -397,7 +440,7 @@
 </div>
 
 <footer>
-  © King Social Boost - All Rights Reserved
+  © 2026 King Social Boost - All Rights Reserved
 </footer>
 
 <script>
@@ -423,50 +466,51 @@ document.querySelectorAll('.sidebar-item').forEach(item => {
   });
 });
 
-// Price & service logic (your previous working version)
+// Services data with type for min/max
 const servicesData = {
   instagram: [
-    {value: "likes", text: "Instagram Likes", desc: "Real Instagram likes from active users. High engagement, natural-looking growth."},
-    {value: "followers", text: "Instagram Followers", desc: "Real Instagram followers with profile pictures, posts and activity. Gradual or instant delivery."},
-    {value: "views", text: "Instagram Video / Reel Views", desc: "Real high-retention views on Reels, Stories & Videos from genuine accounts."},
-    {value: "comments", text: "Instagram Comments", desc: "Real-looking positive comments from active users to boost interaction."},
-    {value: "story-views", text: "Instagram Story Views", desc: "Real story views from real profiles – increases visibility fast."},
-    {value: "saves", text: "Instagram Saves", desc: "Real saves on your posts – improves algorithm performance."}
+    {value: "likes", text: "Instagram Likes", desc: "Real Instagram likes from active users. High engagement, natural-looking growth.", type: "likes"},
+    {value: "followers", text: "Instagram Followers", desc: "Real Instagram followers with profile pictures, posts and activity. Gradual or instant delivery.", type: "followers"},
+    {value: "views", text: "Instagram Video / Reel Views", desc: "Real high-retention views on Reels, Stories & Videos from genuine accounts.", type: "views"},
+    {value: "comments", text: "Instagram Comments", desc: "Real-looking positive comments from active users to boost interaction.", type: "comments"},
+    {value: "story-views", text: "Instagram Story Views", desc: "Real story views from real profiles – increases visibility fast.", type: "views"},
+    {value: "saves", text: "Instagram Saves", desc: "Real saves on your posts – improves algorithm performance.", type: "saves"}
   ],
   tiktok: [
-    {value: "likes", text: "TikTok Likes", desc: "Real TikTok likes from active users – helps videos go viral."},
-    {value: "followers", text: "TikTok Followers", desc: "Real TikTok followers with profile pics & activity – targeted or worldwide."},
-    {value: "views", text: "TikTok Video Views", desc: "Real high-retention TikTok views – pushes content to For You Page."},
-    {value: "comments", text: "TikTok Comments", desc: "Real-looking comments from genuine accounts to increase engagement."},
-    {value: "shares", text: "TikTok Shares", desc: "Real shares to expand reach and virality naturally."},
-    {value: "live-views", text: "TikTok Live Viewers", desc: "Real-time live stream viewers from real users."}
+    {value: "likes", text: "TikTok Likes", desc: "Real TikTok likes from active users – helps videos go viral.", type: "likes"},
+    {value: "followers", text: "TikTok Followers", desc: "Real TikTok followers with profile pics & activity – targeted or worldwide.", type: "followers"},
+    {value: "views", text: "TikTok Video Views", desc: "Real high-retention TikTok views – pushes content to For You Page.", type: "views"},
+    {value: "comments", text: "TikTok Comments", desc: "Real-looking comments from genuine accounts to increase engagement.", type: "comments"},
+    {value: "shares", text: "TikTok Shares", desc: "Real shares to expand reach and virality naturally.", type: "shares"},
+    {value: "live-views", text: "TikTok Live Viewers", desc: "Real-time live stream viewers from real users.", type: "views"}
   ],
   youtube: [
-    {value: "views", text: "YouTube Views", desc: "Real high-retention YouTube views – monetization friendly."},
-    {value: "subscribers", text: "YouTube Subscribers", desc: "Real-looking YouTube subscribers with channel activity."},
-    {value: "likes", text: "YouTube Likes", desc: "Real likes from active viewers to improve ranking."},
-    {value: "comments", text: "YouTube Comments", desc: "Real positive comments from genuine users."},
-    {value: "watchtime", text: "YouTube Watch Time Hours", desc: "Real watch time hours from engaged viewers."}
+    {value: "views", text: "YouTube Views", desc: "Real high-retention YouTube views – monetization friendly.", type: "views"},
+    {value: "subscribers", text: "YouTube Subscribers", desc: "Real-looking YouTube subscribers with channel activity.", type: "followers"},
+    {value: "likes", text: "YouTube Likes", desc: "Real likes from active viewers to improve ranking.", type: "likes"},
+    {value: "comments", text: "YouTube Comments", desc: "Real positive comments from genuine users.", type: "comments"},
+    {value: "watchtime", text: "YouTube Watch Time Hours", desc: "Real watch time hours from engaged viewers.", type: "watchtime"}
   ],
   facebook: [
-    {value: "likes", text: "Facebook Page/Post Likes", desc: "Real likes on pages or posts from active profiles."},
-    {value: "followers", text: "Facebook Followers", desc: "Real followers for your Facebook page."},
-    {value: "views", text: "Facebook Video Views", desc: "Real views on Reels & videos from authentic users."},
-    {value: "comments", text: "Facebook Comments", desc: "Real engaging comments to boost interaction."},
-    {value: "shares", text: "Facebook Shares", desc: "Real shares to increase organic reach."}
+    {value: "likes", text: "Facebook Page/Post Likes", desc: "Real likes on pages or posts from active profiles.", type: "likes"},
+    {value: "followers", text: "Facebook Followers", desc: "Real followers for your Facebook page.", type: "followers"},
+    {value: "views", text: "Facebook Video Views", desc: "Real views on Reels & videos from authentic users.", type: "views"},
+    {value: "comments", text: "Facebook Comments", desc: "Real engaging comments to boost interaction.", type: "comments"},
+    {value: "shares", text: "Facebook Shares", desc: "Real shares to increase organic reach.", type: "shares"}
   ],
   twitter: [
-    {value: "likes", text: "X / Twitter Likes", desc: "Real likes on your tweets from active accounts."},
-    {value: "followers", text: "X / Twitter Followers", desc: "Real X followers with profile activity."},
-    {value: "views", text: "X / Twitter Views / Impressions", desc: "Real impressions & profile visits."},
-    {value: "retweets", text: "X / Twitter Retweets", desc: "Real retweets to expand reach quickly."},
-    {value: "comments", text: "X / Twitter Replies", desc: "Real replies to increase conversation & engagement."}
+    {value: "likes", text: "X / Twitter Likes", desc: "Real likes on your tweets from active accounts.", type: "likes"},
+    {value: "followers", text: "X / Twitter Followers", desc: "Real X followers with profile activity.", type: "followers"},
+    {value: "views", text: "X / Twitter Views / Impressions", desc: "Real impressions & profile visits.", type: "views"},
+    {value: "retweets", text: "X / Twitter Retweets", desc: "Real retweets to expand reach quickly.", type: "retweets"},
+    {value: "comments", text: "X / Twitter Replies", desc: "Real replies to increase conversation & engagement.", type: "comments"}
   ],
   other: [
-    {value: "other", text: "Custom / Other Services", desc: "Real members/followers/views for Telegram, Spotify, Discord, Twitch, LinkedIn etc. – contact support for custom order."}
+    {value: "other", text: "Custom / Other Services", desc: "Real members/followers/views for Telegram, Spotify, Discord, Twitch, LinkedIn etc. – contact support for custom order.", type: "other"}
   ]
 };
 
+// Prices (base in USD)
 const basePrices = {
   "instagram-likes": 0.85,
   "instagram-followers": 2.30,
@@ -495,26 +539,27 @@ const basePrices = {
   "twitter-views": 0.80,
   "twitter-retweets": 3.50,
   "twitter-comments": 5.00,
-  "other": 1.50
+  "other-other": 1.50
 };
 
 const qualityMultipliers = { standard: 0.6333, high: 1.00, premium: 2.00 };
 const exchangeRates = { "USD": 1.00, "EUR": 0.92, "PKR": 278.50, "AFN": 71.00, "AED": 3.67, "SAR": 3.75, "TRY": 34.20 };
-const currencySigns  = { "USD": "$", "EUR": "€", "PKR": "₨", "AFN": "؋", "AED": "د.إ", "SAR": "﷼", "TRY": "₺" };
+const currencySigns = { "USD": "$", "EUR": "€", "PKR": "₨", "AFN": "؋", "AED": "د.إ", "SAR": "﷼", "TRY": "₺" };
 
 // DOM elements
-const platformEl  = document.getElementById('platform');
-const serviceEl   = document.getElementById('configService');
-const qualityEl   = document.getElementById('quality');
-const descEl      = document.getElementById('serviceDescription');
+const platformEl = document.getElementById('platform');
+const serviceEl = document.getElementById('configService');
+const qualityEl = document.getElementById('quality');
+const descEl = document.getElementById('serviceDescription');
 const qualityInfo = document.getElementById('qualityInfo');
-const qtyEl       = document.getElementById('quantity');
-const currEl      = document.getElementById('currency');
+const qtyEl = document.getElementById('quantity');
+const currEl = document.getElementById('currency');
+const quantityNote = document.getElementById('quantityNote');
 
-const price1000El    = document.getElementById('pricePer1000');
-const sign1000El     = document.getElementById('pricePer1000Sign');
-const totalEl        = document.getElementById('totalPrice');
-const totalSignEl    = document.getElementById('currSign');
+const price1000El = document.getElementById('pricePer1000');
+const sign1000El = document.getElementById('pricePer1000Sign');
+const totalEl = document.getElementById('totalPrice');
+const totalSignEl = document.getElementById('currSign');
 
 // Update services
 function updateServices() {
@@ -535,11 +580,14 @@ function updateServices() {
   updatePrice();
 }
 
-// Update description
+// Update description and dynamic quantity limits note
 function updateDescription() {
   const fullKey = serviceEl.value;
   if (!fullKey) {
     descEl.textContent = "Select a service...";
+    quantityNote.innerHTML = "Select a service to see quantity limits...";
+    qtyEl.min = 50;
+    qtyEl.max = 10000000;
     updatePrice();
     return;
   }
@@ -547,6 +595,41 @@ function updateDescription() {
   const [plat, svc] = fullKey.split('-');
   const item = servicesData[plat]?.find(i => i.value === svc);
   descEl.textContent = item ? item.desc : "No description available.";
+
+  const type = item ? item.type : "other";
+  let min = 50;
+  let max = 10000000;
+  let noteText = "";
+
+  if (type === "views") {
+    min = 1000;
+    max = 100000000;
+    noteText = `Minimum: 1,000 
+    Maximum: 100,000,000`;
+  } else if (type === "likes") {
+    min = 100;
+    max = 20000000;
+    noteText = `Minimum: 100
+    Maximum: 20,000,000`;
+  } else if (type === "followers" || type === "subscribers") {
+    min = 50;
+    max = 10000000;
+    noteText = `Minimum: 50 
+    Maximum: 10,000,000`;
+  } else {
+    min = 50;
+    max = 10000000;
+    noteText = `Minimum: 50 
+    Maximum: 10,000,000`;
+  }
+
+  qtyEl.min = min;
+  qtyEl.max = max;
+  qtyEl.placeholder = `e.g. ${min}`;
+
+  // Simple dynamic note - only min/max
+  quantityNote.innerHTML = `<strong>Quantity Limits for this service:</strong><br>${noteText}`;
+
   updatePrice();
 }
 
@@ -583,7 +666,7 @@ function updatePrice() {
   sign1000El.textContent = sign;
 
   let totalLocal = 0;
-  if (qty >= 50 && per1000Local > 0) {
+  if (qty > 0 && per1000Local > 0) {
     totalLocal = (qty / 1000) * per1000Local;
   }
   totalEl.textContent = totalLocal.toFixed(2);
@@ -597,15 +680,16 @@ qualityEl.addEventListener('change', updateQualityInfo);
 qtyEl.addEventListener('input', updatePrice);
 currEl.addEventListener('change', updatePrice);
 
-// WhatsApp submit - fixed with direct redirect
+// WhatsApp submit
 document.getElementById('orderForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const service  = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
-  const quality  = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
+  const service = serviceEl.options[serviceEl.selectedIndex]?.text || "—";
+  const quality = qualityEl.options[qualityEl.selectedIndex]?.text || "—";
   const quantity = qtyEl.value.trim();
-  const link     = document.getElementById('link').value.trim();
-  const price    = totalEl.textContent + " " + totalSignEl.textContent;
+  const link = document.getElementById('link').value.trim();
+  const discount = document.getElementById('discountCode').value.trim();
+  const price = totalEl.textContent + " " + totalSignEl.textContent;
 
   if (!quantity || !link) {
     alert("Please fill quantity and link/username");
@@ -614,6 +698,8 @@ document.getElementById('orderForm').addEventListener('submit', function(e) {
 
   const orderNumber = 103 + Math.floor(Math.random() * 500);
 
+  let discountText = discount ? `\nDiscount Code: ${discount}` : "";
+
   const message = 
 `KING boosts new order:
 Order #${orderNumber}
@@ -621,7 +707,7 @@ Order #${orderNumber}
 Service: ${service}
 Quantity : ${quantity}
 Quality: ${quality}
-Link: ${link}
+Link: ${link}${discountText}
 Price: ${price}
 
 ♻️ Please wait 1-2 hours to get your order processed.
@@ -631,10 +717,7 @@ Price: ${price}
 ❤️ Thanks for ordering! (:`;
 
   const encoded = encodeURIComponent(message);
-  const waUrl = `https://wa.me/923159180748?text=${encoded}`;
-
-  // Direct redirect to WhatsApp (opens app on mobile, web on desktop)
-  window.location.href = waUrl;
+  window.location.href = `https://wa.me/923159180748?text=${encoded}`;
 });
 
 // Initial calls
