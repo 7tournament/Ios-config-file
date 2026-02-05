@@ -32,25 +32,25 @@
       color: var(--light);
       display: flex;
       flex-direction: column;
-      padding-top: 80px;
+      padding-top: 70px;
       padding-bottom: 20px;
-      padding-left: 12px;
-      padding-right: 12px;
+      padding-left: 10px;
+      padding-right: 10px;
     }
 
     .help-box {
       position: fixed;
-      top: 12px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 2000;
       background: var(--yellow);
       color: var(--black);
-      padding: 10px 24px;
+      padding: 8px 20px;
       border-radius: 50px;
       font-weight: bold;
-      font-size: clamp(0.95rem, 3.5vw, 1.1rem);
-      box-shadow: 0 6px 20px rgba(255,215,0,0.5);
+      font-size: clamp(0.9rem, 3.2vw, 1rem);
+      box-shadow: 0 5px 18px rgba(255,215,0,0.5);
       cursor: pointer;
       text-align: center;
       transition: all 0.3s;
@@ -59,23 +59,23 @@
     }
 
     .help-box:hover {
-      transform: translateX(-50%) scale(1.08);
-      box-shadow: 0 10px 30px rgba(255,215,0,0.7);
+      transform: translateX(-50%) scale(1.06);
+      box-shadow: 0 8px 25px rgba(255,215,0,0.7);
       background: var(--yellow-dark);
     }
 
     .menu-btn {
       position: fixed;
-      top: 20px;
-      left: 20px;
+      top: 18px;
+      left: 18px;
       z-index: 1100;
       background: var(--dark-gray);
       color: var(--yellow);
       border: 2px solid var(--yellow-dark);
       border-radius: 8px;
-      width: 50px;
-      height: 50px;
-      font-size: 2rem;
+      width: 45px;
+      height: 45px;
+      font-size: 1.8rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -90,14 +90,14 @@
     .sidebar {
       position: fixed;
       top: 0;
-      left: -250px;
+      left: -240px;
       height: 100%;
-      width: 250px;
+      width: 240px;
       background: var(--dark-gray);
       border-right: 1px solid var(--yellow-dark);
       z-index: 1000;
       transition: left 0.3s ease;
-      padding-top: 80px;
+      padding-top: 70px;
       overflow-y: auto;
     }
 
@@ -105,10 +105,10 @@
 
     .sidebar-item {
       width: 100%;
-      padding: 16px 20px;
+      padding: 14px 18px;
       color: var(--light);
       text-decoration: none;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       display: block;
       transition: all 0.2s;
       cursor: pointer;
@@ -134,63 +134,87 @@
 
     .overlay.open { opacity: 1; visibility: visible; }
 
-    .container { max-width: 680px; margin: 0 auto; flex: 1; width: 100%; }
+    .container {
+      max-width: 480px;          /* ← zoomed out (was 680px) */
+      margin: 0 auto;
+      flex: 1;
+      width: 100%;
+    }
 
-    header { text-align: center; padding: 40px 0 20px; }
-    h1 { font-size: 3.2rem; font-weight: 900; color: var(--yellow); text-shadow: 0 3px 10px rgba(255,215,0,0.4); }
-    .subtitle { color: #bbbbbb; font-size: 1.15rem; margin-top: 8px; }
+    header { text-align: center; padding: 30px 0 15px; }
+    h1 { font-size: 2.6rem; font-weight: 900; color: var(--yellow); text-shadow: 0 2px 8px rgba(255,215,0,0.4); }
+    .subtitle { color: #bbbbbb; font-size: 1.05rem; margin-top: 6px; }
 
     .stats-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      margin: 30px 0 40px;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 14px;
+      margin: 25px 0 35px;
     }
 
     .stat-card {
       background: var(--dark-gray);
       border: 1px solid var(--yellow-dark);
       border-radius: 12px;
-      padding: 20px 16px;
+      padding: 16px 14px;
       text-align: center;
       box-shadow: 0 4px 15px rgba(255,215,0,0.08);
     }
 
-    .stat-number { font-size: 2.4rem; font-weight: 900; color: var(--yellow); margin-bottom: 6px; }
-    .stat-text { font-size: 0.95rem; color: #dddddd; text-transform: uppercase; letter-spacing: 0.5px; }
+    .stat-number { font-size: 2.1rem; font-weight: 900; color: var(--yellow); margin-bottom: 5px; }
+    .stat-text { font-size: 0.9rem; color: #dddddd; text-transform: uppercase; letter-spacing: 0.4px; }
 
-    .currency-selector { text-align: center; margin: 30px 0 40px; }
-    .currency-selector label { font-size: 1.1rem; margin-right: 12px; color: var(--yellow); font-weight: 600; }
-    .currency-selector select { padding: 12px 18px; font-size: 1.05rem; background: var(--gray); color: var(--yellow); border: 2px solid var(--yellow-dark); border-radius: 10px; max-width: 100%; }
+    .currency-selector { text-align: center; margin: 25px 0 35px; }
+    .currency-selector label { font-size: 1rem; margin-right: 10px; color: var(--yellow); font-weight: 600; }
+    .currency-selector select {
+      padding: 10px 16px;
+      font-size: 1rem;
+      background: var(--gray);
+      color: var(--yellow);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 10px;
+      max-width: 100%;
+    }
 
-    .config-card, .order-card { background: var(--dark-gray); border: 2px solid var(--yellow-dark); border-radius: 16px; padding: 32px 24px; margin-bottom: 40px; width: 100%; }
+    .config-card, .order-card {
+      background: var(--dark-gray);
+      border: 2px solid var(--yellow-dark);
+      border-radius: 16px;
+      padding: 24px 18px;
+      margin-bottom: 35px;
+      width: 100%;
+    }
 
-    h2 { color: var(--yellow); font-size: 1.8rem; margin-bottom: 24px; text-align: center; }
+    h2 { color: var(--yellow); font-size: 1.6rem; margin-bottom: 20px; text-align: center; }
 
-    .form-group { margin-bottom: 24px; }
+    .form-group { margin-bottom: 20px; }
 
-    label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--yellow); font-size: 1.05rem; }
+    label { display: block; margin-bottom: 7px; font-weight: 600; color: var(--yellow); font-size: 1rem; }
 
     select, input[type="text"], input[type="number"] {
       width: 100%;
-      padding: 14px 16px;
+      padding: 12px 14px;
       background: #0d0d0d;
       border: 1px solid #444444;
       border-radius: 10px;
       color: white;
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
-    select:focus, input:focus { border-color: var(--yellow); box-shadow: 0 0 0 3px rgba(255,215,0,0.2); outline: none; }
+    select:focus, input:focus {
+      border-color: var(--yellow);
+      box-shadow: 0 0 0 3px rgba(255,215,0,0.2);
+      outline: none;
+    }
 
     #serviceDescription, #qualityInfo {
       background: rgba(255,215,0,0.08);
       border: 1px solid rgba(255,215,0,0.25);
       border-radius: 10px;
-      padding: 16px;
-      margin-top: 12px;
-      min-height: 70px;
-      font-size: 0.98rem;
+      padding: 14px;
+      margin-top: 10px;
+      min-height: 60px;
+      font-size: 0.95rem;
       line-height: 1.5;
     }
 
@@ -198,10 +222,10 @@
       background: rgba(255,215,0,0.12);
       border: 1px solid rgba(255,215,0,0.35);
       border-radius: 10px;
-      padding: 14px;
-      margin: 20px 0 12px;
+      padding: 12px;
+      margin: 18px 0 10px;
       text-align: center;
-      font-size: 1.15rem;
+      font-size: 1.1rem;
     }
 
     .price-box strong { color: var(--yellow); }
@@ -210,19 +234,19 @@
       background: rgba(255,215,0,0.08);
       border: 1px solid rgba(255,215,0,0.25);
       border-radius: 12px;
-      padding: 20px;
-      margin: 20px 0 30px;
+      padding: 18px;
+      margin: 18px 0 25px;
       text-align: center;
     }
 
-    .price-label { font-size: 1.1rem; color: #dddddd; margin-bottom: 8px; }
+    .price-label { font-size: 1rem; color: #dddddd; margin-bottom: 6px; }
 
-    .total { font-size: 2.8rem; font-weight: 800; color: var(--yellow); }
+    .total { font-size: 2.4rem; font-weight: 800; color: var(--yellow); }
 
     .btn-whatsapp {
       width: 100%;
-      padding: 18px;
-      font-size: 1.3rem;
+      padding: 16px;
+      font-size: 1.2rem;
       font-weight: bold;
       background: var(--whatsapp);
       color: white;
@@ -232,61 +256,59 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
-      box-shadow: 0 8px 20px rgba(37,211,102,0.4);
+      gap: 10px;
+      box-shadow: 0 7px 18px rgba(37,211,102,0.4);
       transition: all 0.25s;
     }
 
-    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(37,211,102,0.6); }
+    .btn-whatsapp:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(37,211,102,0.6); }
 
-    .whatsapp-icon { width: 28px; height: 28px; }
+    .whatsapp-icon { width: 26px; height: 26px; }
 
     .quantity-limits-note {
       background: rgba(255,215,0,0.12);
       border: 1px solid rgba(255,215,0,0.35);
       border-radius: 10px;
-      padding: 12px 16px;
-      margin-top: 10px;
-      font-size: 0.95rem;
+      padding: 10px 14px;
+      margin-top: 8px;
+      font-size: 0.9rem;
       color: var(--light);
       line-height: 1.5;
     }
 
-    .quantity-limits-note strong {
-      color: var(--yellow);
-    }
+    .quantity-limits-note strong { color: var(--yellow); }
 
-    .discount-note { font-size: 0.9rem; color: #aaa; margin-top: 6px; text-align: center; }
+    .discount-note { font-size: 0.85rem; color: #aaa; margin-top: 5px; text-align: center; }
 
     .special-offer-note {
       background: rgba(255,215,0,0.15);
       border: 1px solid var(--yellow-dark);
       border-radius: 10px;
-      padding: 12px;
-      margin: 20px 0;
+      padding: 10px;
+      margin: 18px 0;
       text-align: center;
-      font-size: 1rem;
+      font-size: 0.95rem;
       color: var(--light);
     }
 
-    .note { margin-top: 20px; text-align: center; font-size: 0.95rem; color: #999; }
+    .note { margin-top: 18px; text-align: center; font-size: 0.9rem; color: #999; }
 
-    .hint { font-size: 0.9rem; color: #aaa; margin-top: 6px; text-align: center; }
+    .hint { font-size: 0.85rem; color: #aaa; margin-top: 5px; text-align: center; }
 
     footer {
       text-align: center;
-      padding: 30px 0 20px;
+      padding: 25px 0 15px;
       color: #777;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       border-top: 1px solid #222;
       margin-top: auto;
     }
 
     @media (max-width: 520px) {
-      h1 { font-size: 2.6rem; }
-      .total { font-size: 2.4rem; }
+      h1 { font-size: 2.3rem; }
+      .total { font-size: 2.1rem; }
       .stats-grid { grid-template-columns: 1fr 1fr; }
-      .help-box { font-size: 0.95rem; padding: 8px 18px; top: 10px; }
+      .help-box { font-size: 0.9rem; padding: 7px 16px; top: 8px; }
     }
   </style>
 </head>
@@ -396,7 +418,6 @@
         <label>Quantity</label>
         <input type="number" id="quantity" placeholder="e.g. 1000" required>
 
-        <!-- DYNAMIC NOTE: Only shows min/max for the chosen service -->
         <div class="quantity-limits-note" id="quantityNote">
           Select a service to see quantity limits...
         </div>
@@ -513,13 +534,13 @@ const servicesData = {
 // Prices (base in USD)
 const basePrices = {
   "instagram-likes": 0.70,
-  "instagram-followers": 3.300,
+  "instagram-followers": 2.30,
   "instagram-views": 0.70,
   "instagram-comments": 4.20,
   "instagram-story-views": 1.10,
   "instagram-saves": 2.50,
   "tiktok-likes": 0.95,
-  "tiktok-followers": 3.19,
+  "tiktok-followers": 3.00,
   "tiktok-views": 0.65,
   "tiktok-comments": 3.80,
   "tiktok-shares": 5.50,
@@ -627,7 +648,6 @@ function updateDescription() {
   qtyEl.max = max;
   qtyEl.placeholder = `e.g. ${min}`;
 
-  // Simple dynamic note - only min/max
   quantityNote.innerHTML = `<strong>Quantity Limits for this service:</strong><br>${noteText}`;
 
   updatePrice();
